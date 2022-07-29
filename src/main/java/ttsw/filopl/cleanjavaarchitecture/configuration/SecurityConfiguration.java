@@ -25,15 +25,15 @@ import java.util.Set;
  **/
 
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final TokenService tokenService;
 
-    public SecurityConfiguration(TokenService tokenService) {
+    SecurityConfiguration(TokenService tokenService) {
         this.tokenService = tokenService;
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder());
     }
@@ -53,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
+    @Override
+    protected UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
                 new User(
                         "user",
@@ -69,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

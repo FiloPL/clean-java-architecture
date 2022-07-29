@@ -21,7 +21,7 @@ public class TokenService {
 
     private final JwtConfigurationProperties properties;
 
-    public TokenService(JwtConfigurationProperties properties) {
+    TokenService(JwtConfigurationProperties properties) {
         this.properties = properties;
     }
 
