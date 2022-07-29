@@ -1,7 +1,11 @@
 package ttsw.filopl.cleanjavaarchitecture.filter;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ttsw.filopl.cleanjavaarchitecture.service.TokenService;
 
@@ -10,12 +14,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 public class AuthenticationFilter extends OncePerRequestFilter {
-
     private static final String BEARER = "Bearer ";
 
     private final UserDetailsService userDetailsService;
@@ -28,7 +32,26 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //TODO
-
+        Optional.ofNullable(
+                        request.getHeader(HttpHeaders.AUTHORIZATION)
+                ).filter(authHeader -> authHeader.startsWith(BEARER))
+                .map(authHeader -> authHeader.substring(BEARER.length()))
+                .ifPresent(token -> {
+                    if (SecurityContextHolder.getContext().getAuthentication() != null) {
+                        return;
+                    }
+                    String username = tokenService.getUsernameFromToken(token);
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                    if (tokenService.isValidForUser(token, userDetails)) {
+                        var authentication = new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                });
+        filterChain.doFilter(request, response);
     }
 }

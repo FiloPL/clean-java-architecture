@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ttsw.filopl.cleanjavaarchitecture.configuration.JwtConfigurationProperties;
 
 import java.security.Key;
-import java.security.cert.X509CertSelector;
 import java.util.Date;
 import java.util.Map;
 
@@ -63,6 +62,4 @@ public class TokenService {
     private Key key() {
         return Keys.hmacShaKeyFor(properties.getSecret().getBytes());
     }
-
-
 }

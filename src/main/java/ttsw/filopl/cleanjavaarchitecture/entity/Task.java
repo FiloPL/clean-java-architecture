@@ -28,7 +28,7 @@ public class Task {
     @JoinColumn(name = "source_id")
     private Project project;
 
-    @PersistenceConstructor
+    //@PersistenceConstructor
     public Task() {
     }
 

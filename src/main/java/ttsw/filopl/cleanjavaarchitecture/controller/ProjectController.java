@@ -24,6 +24,11 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @GetMapping
+    public List<Project> list() {
+        return projectService.list();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Project> get(@PathVariable int id) {
         return projectService.get(id)

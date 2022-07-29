@@ -6,6 +6,8 @@ import org.springframework.data.annotation.PersistenceConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
@@ -15,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class ProjectStep {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private int id;
 
     @NotNull
@@ -26,11 +28,11 @@ public class ProjectStep {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @PersistenceConstructor
+    //@PersistenceConstructor
     public ProjectStep() {
     }
 
-    public ProjectStep(String description, int daysToProjectDeadline, Project project) {
+    public ProjectStep(@NotNull String description, int daysToProjectDeadline, Project project) {
         this.description = description;
         this.daysToProjectDeadline = daysToProjectDeadline;
         this.project = project;
@@ -67,5 +69,4 @@ public class ProjectStep {
     public void setProject(Project project) {
         this.project = project;
     }
-
 }

@@ -1,6 +1,5 @@
 package ttsw.filopl.cleanjavaarchitecture.service;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import ttsw.filopl.cleanjavaarchitecture.dto.TaskDto;
 import ttsw.filopl.cleanjavaarchitecture.dto.TaskWithChangesDto;
@@ -46,8 +45,6 @@ public class TaskService {
                 )
         );
     }
-
-
 
     public List<TaskDto> list() {
         return taskRepository.findAll().stream()

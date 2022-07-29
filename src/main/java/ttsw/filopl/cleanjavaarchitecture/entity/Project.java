@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
@@ -15,7 +17,7 @@ import java.util.Set;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private int id;
 
     private String name;
@@ -23,7 +25,7 @@ public class Project {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "project", fetch = FetchType.EAGER)
     private Set<ProjectStep> steps = new HashSet<>();
 
-    @PersistenceConstructor
+    //@PersistenceConstructor
     public Project() {
     }
 
@@ -45,10 +47,6 @@ public class Project {
 
     public Set<ProjectStep> getSteps() {
         return steps;
-    }
-
-    public void setSteps(Set<ProjectStep> steps) {
-        this.steps = steps;
     }
 
     public void addStep(ProjectStep step) {
