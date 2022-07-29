@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.configuration;
+package ttsw.filopl.cleanjavaarchitecture.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
-import ttsw.filopl.cleanjavaarchitecture.filter.AuthenticationFilter;
-import ttsw.filopl.cleanjavaarchitecture.service.TokenService;
 
 import java.util.Set;
 

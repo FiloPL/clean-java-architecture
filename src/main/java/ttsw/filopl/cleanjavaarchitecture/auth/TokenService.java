@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.service;
+package ttsw.filopl.cleanjavaarchitecture.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ttsw.filopl.cleanjavaarchitecture.configuration.JwtConfigurationProperties;
+import ttsw.filopl.cleanjavaarchitecture.auth.JwtConfigurationProperties;
 
 import java.security.Key;
 import java.util.Date;
@@ -17,7 +17,7 @@ import java.util.Map;
  **/
 
 @Service
-public class TokenService {
+class TokenService {
 
     private final JwtConfigurationProperties properties;
 
@@ -25,11 +25,11 @@ public class TokenService {
         this.properties = properties;
     }
 
-    public String getUsernameFromToken(String token) {
+    String getUsernameFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
 
-    public String generateNewToken(UserDetails userDetails) {
+    String generateNewToken(UserDetails userDetails) {
         Map<String, Object> claims = Map.of(); // e.g. roles
         return Jwts.builder()
                 .setClaims(claims)
@@ -40,7 +40,7 @@ public class TokenService {
                 .compact();
     }
 
-    public boolean isValidForUser(String token, UserDetails userDetails) {
+    boolean isValidForUser(String token, UserDetails userDetails) {
         String username = getUsernameFromToken(token);
         return !isTokenExpired(token) && username.equals(userDetails.getUsername());
     }

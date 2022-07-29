@@ -1,10 +1,10 @@
-package ttsw.filopl.cleanjavaarchitecture.dto;
+package ttsw.filopl.cleanjavaarchitecture.auth;
 
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-public class AuthenticationRequestDto {
+class AuthenticationRequestDto {
     private String username;
     private String password;
 

@@ -1,6 +1,6 @@
-package ttsw.filopl.cleanjavaarchitecture.dto;
+package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.entity.Task;
+import ttsw.filopl.cleanjavaarchitecture.task.Task;
 
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-public class TaskWithChangesDto {
+class TaskWithChangesDto {
 
     private int id;
     @NotNull
@@ -18,7 +18,7 @@ public class TaskWithChangesDto {
     private ZonedDateTime deadline;
     private int changesCount;
 
-    public TaskWithChangesDto(Task source) {
+    TaskWithChangesDto(Task source) {
         id = source.getId();
         description = source.getDescription();
         done = source.isDone();

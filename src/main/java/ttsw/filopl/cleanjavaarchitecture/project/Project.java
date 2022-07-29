@@ -1,6 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.entity;
-
-import org.springframework.data.annotation.PersistenceConstructor;
+package ttsw.filopl.cleanjavaarchitecture.project;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -33,7 +31,7 @@ public class Project {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
@@ -41,7 +39,7 @@ public class Project {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 

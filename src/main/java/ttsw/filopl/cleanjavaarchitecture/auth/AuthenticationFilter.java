@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.filter;
+package ttsw.filopl.cleanjavaarchitecture.auth;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ttsw.filopl.cleanjavaarchitecture.service.TokenService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,13 +18,13 @@ import java.util.Optional;
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
-public class AuthenticationFilter extends OncePerRequestFilter {
+class AuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER = "Bearer ";
 
     private final UserDetailsService userDetailsService;
     private final TokenService tokenService;
 
-    public AuthenticationFilter(UserDetailsService userDetailsService, TokenService tokenService) {
+    AuthenticationFilter(UserDetailsService userDetailsService, TokenService tokenService) {
         this.userDetailsService = userDetailsService;
         this.tokenService = tokenService;
     }

@@ -1,13 +1,13 @@
-package ttsw.filopl.cleanjavaarchitecture.dto;
+package ttsw.filopl.cleanjavaarchitecture.auth;
 
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-public class AuthenticationResponseDto {
+class AuthenticationResponseDto {
     private final String token;
 
-    public AuthenticationResponseDto(String token) {
+    AuthenticationResponseDto(String token) {
         this.token = token;
     }
 

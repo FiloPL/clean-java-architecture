@@ -1,6 +1,6 @@
-package ttsw.filopl.cleanjavaarchitecture.dto;
+package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.entity.Task;
+import ttsw.filopl.cleanjavaarchitecture.task.Task;
 
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
@@ -33,7 +33,7 @@ public class TaskDto {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 

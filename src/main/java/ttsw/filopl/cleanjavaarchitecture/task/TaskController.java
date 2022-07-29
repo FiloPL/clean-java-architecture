@@ -1,10 +1,7 @@
-package ttsw.filopl.cleanjavaarchitecture.controller;
+package ttsw.filopl.cleanjavaarchitecture.task;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ttsw.filopl.cleanjavaarchitecture.dto.TaskDto;
-import ttsw.filopl.cleanjavaarchitecture.dto.TaskWithChangesDto;
-import ttsw.filopl.cleanjavaarchitecture.service.TaskService;
 
 import java.net.URI;
 import java.util.List;
