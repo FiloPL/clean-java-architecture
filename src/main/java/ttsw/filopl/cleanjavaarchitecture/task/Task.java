@@ -1,7 +1,7 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import org.springframework.data.annotation.PersistenceConstructor;
-import ttsw.filopl.cleanjavaarchitecture.project.Project;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
+import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
+class Task {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int id;
@@ -27,16 +27,26 @@ public class Task {
     private String additionalComment;
     @ManyToOne
     @JoinColumn(name = "source_id")
-    private Project project;
+    private SimpleProjectQueryEntity project;
 
-    //@PersistenceConstructor
+//    @PersistenceConstructor
     public Task() {
     }
 
-    public Task(@NotNull String description, ZonedDateTime deadline, Project project) {
+    Task(final @NotNull String description, final ZonedDateTime deadline, final SimpleProjectQueryEntity project) {
         this.description = description;
         this.deadline = deadline;
         this.project = project;
+    }
+
+    TaskDto toDto() {
+        return TaskDto.builder()
+                .withId(id)
+                .withDescription(description)
+                .withDone(done)
+                .withDeadline(deadline)
+                .withAdditionalComment(additionalComment)
+                .build();
     }
 
     int getId() {
@@ -55,7 +65,7 @@ public class Task {
         this.description = description;
     }
 
-    public boolean isDone() {
+    boolean isDone() {
         return done;
     }
 
@@ -87,11 +97,11 @@ public class Task {
         this.additionalComment = additionalComment;
     }
 
-    Project getProject() {
+    SimpleProjectQueryEntity getProject() {
         return project;
     }
 
-    void setProject(Project project) {
+    void setProject(SimpleProjectQueryEntity project) {
         this.project = project;
     }
 }

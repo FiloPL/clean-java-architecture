@@ -1,9 +1,7 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -15,7 +13,4 @@ interface ProjectRepository extends JpaRepository<Project, Integer> {
 
     Optional<Project> findById(Integer id);
 
-    List<Project> findAll();
-
-    long count();
 }

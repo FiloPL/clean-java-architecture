@@ -1,7 +1,7 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ttsw.filopl.cleanjavaarchitecture.project.Project;
+import org.springframework.data.annotation.PersistenceConstructor;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectStepDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,15 +15,12 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "project_steps")
 class ProjectStep {
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private int id;
-
     @NotNull
     private String description;
     private int daysToProjectDeadline;
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -68,5 +65,9 @@ class ProjectStep {
 
     void setProject(Project project) {
         this.project = project;
+    }
+
+    ProjectStepDto toDto() {
+        return ProjectStepDto.create(id, description, daysToProjectDeadline);
     }
 }

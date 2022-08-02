@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.project;
+package ttsw.filopl.cleanjavaarchitecture.project.dto;
 
 import java.time.ZonedDateTime;
 
@@ -6,10 +6,10 @@ import java.time.ZonedDateTime;
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-class ProjectDeadlineDto {
+public class ProjectDeadlineDto {
     private ZonedDateTime deadline;
 
-    ZonedDateTime getDeadline() {
+    public ZonedDateTime getDeadline() {
         return deadline;
     }
 

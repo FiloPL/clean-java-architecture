@@ -9,15 +9,8 @@ import java.util.Optional;
  * Created by T. Filo Zegarlicki on 29.07.2022
  **/
 
-public interface TaskRepository extends Repository<Task, Integer> {
-
-    int count();
-
+interface TaskRepository extends Repository<Task, Integer> {
     Optional<Task> findById(Integer id);
-
-    List<Task> findAllByProject_Id(int id);
-
-    List<Task> findAll();
 
     <S extends Task> S save(S entity);
 

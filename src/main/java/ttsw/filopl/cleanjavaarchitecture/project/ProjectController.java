@@ -2,7 +2,9 @@ package ttsw.filopl.cleanjavaarchitecture.project;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ttsw.filopl.cleanjavaarchitecture.task.TaskDto;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDeadlineDto;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
+import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 import java.net.URI;
 import java.util.List;
@@ -15,43 +17,48 @@ import java.util.List;
 @RequestMapping("/projects")
 class ProjectController {
 
-    private final ProjectService projectService;
+    private final ProjectFacade projectFacade;
+    private final ProjectQueryRepository projectQueryRepository;
 
-    ProjectController(ProjectService projectService) {
-        this.projectService = projectService;
+    ProjectController(final ProjectFacade projectFacade, final ProjectQueryRepository projectQueryRepository) {
+        this.projectFacade = projectFacade;
+        this.projectQueryRepository = projectQueryRepository;
     }
 
     @GetMapping
-    List<Project> list() {
-        return projectService.list();
+    List<ProjectDto> list() {
+        return projectQueryRepository.findBy();
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Project> get(@PathVariable int id) {
-        return projectService.get(id)
+    ResponseEntity<ProjectDto> get(@PathVariable int id) {
+        return projectQueryRepository.findDtoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}") ResponseEntity<Project> update(@PathVariable int id, @RequestBody Project toUpdate) {
-        if (id != toUpdate.getId() && toUpdate.getId() != 0) {
-            throw new IllegalStateException("Id in URL is different than in body: " + id + " and " + toUpdate.getId());
+    @PutMapping("/{id}")
+    ResponseEntity<Project> update(@PathVariable int id, @RequestBody ProjectDto toUpdate) {
+        if (id != toUpdate.getId()) {
+            throw new IllegalStateException("Id in URL is different than in body: " + id + " and " + (toUpdate.getId() == 0 ? "empty" : toUpdate.getId()));
         }
-        toUpdate.setId(id);
-        projectService.save(toUpdate);
+        projectFacade.save(toUpdate);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping ResponseEntity<Project> create(@RequestBody Project toCreate) {
-        Project result = projectService.save(toCreate);
+    @PostMapping
+    ResponseEntity<ProjectDto> create(@RequestBody ProjectDto toCreate) {
+        ProjectDto result = projectFacade.save(toCreate);
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
-    @PostMapping("/{id}/tasks") List<TaskDto> createTasks(@PathVariable int id, @RequestBody ProjectDeadlineDto deadlineDto) {
-        return projectService.createTasks(id, deadlineDto.getDeadline());
+    @PostMapping("/{id}/tasks")
+    List<TaskDto> createTasks(@PathVariable int id, @RequestBody ProjectDeadlineDto deadlineDto) {
+        return projectFacade.createTasks(id, deadlineDto.getDeadline());
     }
 
-    @ExceptionHandler(IllegalStateException.class) ResponseEntity<String> handleClientError(IllegalStateException e) {
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<String> handleClientError(IllegalStateException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

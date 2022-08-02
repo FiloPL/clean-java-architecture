@@ -1,9 +1,12 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
+import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -12,7 +15,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+class Project {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -47,7 +50,7 @@ public class Project {
         return steps;
     }
 
-    public void addStep(ProjectStep step) {
+    void addStep(ProjectStep step) {
         if (steps.contains(step)) {
             return;
         }
@@ -55,7 +58,7 @@ public class Project {
         step.setProject(this);
     }
 
-    public void removeStep(ProjectStep step) {
+    void removeStep(ProjectStep step) {
         if (!steps.contains(step)) {
             return;
         }
@@ -63,4 +66,7 @@ public class Project {
         step.setProject(null);
     }
 
+    ProjectDto toDto() {
+        return ProjectDto.create(id, name, steps.stream().map(ProjectStep::toDto).collect(toList()));
+    }
 }

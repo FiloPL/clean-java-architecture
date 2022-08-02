@@ -2,6 +2,8 @@ package ttsw.filopl.cleanjavaarchitecture.task;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
+import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskWithChangesQueryDto;
 
 import java.net.URI;
 import java.util.List;
@@ -13,26 +15,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 class TaskController {
+    private final TaskFacade taskFacade;
+    private final TaskQueryRepository taskQueryRepository;
 
-    private final TaskService taskService;
-
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
+    TaskController(final TaskFacade taskFacade, final TaskQueryRepository taskQueryRepository) {
+        this.taskFacade = taskFacade;
+        this.taskQueryRepository = taskQueryRepository;
     }
 
     @GetMapping
     List<TaskDto> list() {
-        return taskService.list();
+        return taskQueryRepository.findAllBy();
     }
 
     @GetMapping(params = "changes")
-    List<TaskWithChangesDto> listWithChanges() {
-        return taskService.listWithChanges();
+    List<TaskWithChangesQueryDto> listWithChanges() {
+        return taskQueryRepository.findAllWithChangesBy();
     }
 
     @GetMapping("/{id}")
     ResponseEntity<TaskDto> get(@PathVariable int id) {
-        return taskService.get(id)
+        return taskQueryRepository.findDtoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -42,20 +45,19 @@ class TaskController {
         if (id != toUpdate.getId() && toUpdate.getId() != 0) {
             throw new IllegalStateException("Id in URL is different than in body: " + id + " and " + toUpdate.getId());
         }
-        toUpdate.setId(id);
-        taskService.save(toUpdate);
+        taskFacade.save(toUpdate.withId(id));
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
     ResponseEntity<TaskDto> create(@RequestBody TaskDto toCreate) {
-        TaskDto result = taskService.save(toCreate);
+        TaskDto result = taskFacade.save(toCreate);
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
     @DeleteMapping("/{id}")
     ResponseEntity<TaskDto> delete(@PathVariable int id) {
-        taskService.delete(id);
+        taskFacade.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
