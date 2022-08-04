@@ -1,8 +1,5 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
-import org.springframework.data.annotation.PersistenceConstructor;
-import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectStepDto;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -65,9 +62,5 @@ class ProjectStep {
 
     void setProject(Project project) {
         this.project = project;
-    }
-
-    ProjectStepDto toDto() {
-        return ProjectStepDto.create(id, description, daysToProjectDeadline);
     }
 }

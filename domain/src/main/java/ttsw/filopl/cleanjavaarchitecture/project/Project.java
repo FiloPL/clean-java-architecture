@@ -1,12 +1,9 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -64,9 +61,5 @@ class Project {
         }
         steps.remove(step);
         step.setProject(null);
-    }
-
-    ProjectDto toDto() {
-        return ProjectDto.create(id, name, steps.stream().map(ProjectStep::toDto).collect(toList()));
     }
 }

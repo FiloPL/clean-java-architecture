@@ -9,8 +9,6 @@ import javax.persistence.Table;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-
-
 /**
  * Created by T. Filo Zegarlicki on 01.08.2022
  **/

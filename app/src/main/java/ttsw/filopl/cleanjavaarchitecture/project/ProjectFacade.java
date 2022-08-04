@@ -2,6 +2,7 @@ package ttsw.filopl.cleanjavaarchitecture.project;
 
 import org.springframework.stereotype.Service;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectStepDto;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
 import ttsw.filopl.cleanjavaarchitecture.task.TaskQueryRepository;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
@@ -39,12 +40,12 @@ public class ProjectFacade {
     ProjectDto save(ProjectDto dtoToSave) {
         var toSave = projectFactory.from(dtoToSave);
         if (toSave.getId() != 0) {
-            return saveWithId(toSave).toDto();
+            return toDto(saveWithId(toSave));
         }
         if (dtoToSave.getSteps().stream().anyMatch(step -> step.getId() != 0)) {
             throw new IllegalStateException("Cannot add project with existing steps");
         }
-        return projectRepository.save(toSave).toDto();
+        return toDto(projectRepository.save(toSave));
     }
 
     private Project saveWithId(Project toSave) {
@@ -98,5 +99,13 @@ public class ProjectFacade {
                     ).collect(toList());
             return taskFacade.saveAll(tasks, new SimpleProjectQueryEntity(projectId, project.getName()));
         }).orElseThrow(() -> new IllegalArgumentException("No project found with id: " + projectId));
+    }
+
+    private ProjectDto toDto(Project project) {
+        return ProjectDto.create(project.getId(), project.getName(), project.getSteps().stream().map(this::toDto).collect(toList()));
+    }
+
+    private ProjectStepDto toDto(ProjectStep step) {
+        return ProjectStepDto.create(step.getId(), step.getDescription(), step.getDaysToProjectDeadline());
     }
 }

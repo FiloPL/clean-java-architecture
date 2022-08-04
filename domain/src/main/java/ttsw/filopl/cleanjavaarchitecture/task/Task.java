@@ -1,7 +1,6 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
 import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
-import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,16 +36,6 @@ class Task {
         this.description = description;
         this.deadline = deadline;
         this.project = project;
-    }
-
-    TaskDto toDto() {
-        return TaskDto.builder()
-                .withId(id)
-                .withDescription(description)
-                .withDone(done)
-                .withDeadline(deadline)
-                .withAdditionalComment(additionalComment)
-                .build();
     }
 
     int getId() {

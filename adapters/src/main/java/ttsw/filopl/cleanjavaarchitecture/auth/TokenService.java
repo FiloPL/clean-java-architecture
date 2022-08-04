@@ -6,7 +6,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ttsw.filopl.cleanjavaarchitecture.auth.JwtConfigurationProperties;
 
 import java.security.Key;
 import java.util.Date;
