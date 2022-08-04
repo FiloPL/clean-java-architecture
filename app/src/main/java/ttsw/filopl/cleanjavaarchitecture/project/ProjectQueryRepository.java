@@ -1,19 +1,18 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
-import org.springframework.data.repository.Repository;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Created by T. Filo Zegarlicki on 02.08.2022
  **/
 
-public interface ProjectQueryRepository extends Repository<Project, Integer> {
+public interface ProjectQueryRepository {
     Optional<ProjectDto> findDtoById(Integer id);
 
-    List<ProjectDto> findBy();
+    <T> Set<T> findBy(Class<T> type);
 
     long count();
 }

@@ -1,6 +1,5 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
-import org.springframework.stereotype.Service;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectStepDto;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
@@ -21,7 +20,6 @@ import static java.util.stream.Collectors.toSet;
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-@Service
 public class ProjectFacade {
     private final ProjectFactory projectFactory;
     private final ProjectRepository projectRepository;

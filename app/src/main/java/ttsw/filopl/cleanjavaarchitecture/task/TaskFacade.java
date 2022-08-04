@@ -1,6 +1,5 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import org.springframework.stereotype.Service;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
@@ -13,7 +12,6 @@ import static java.util.stream.Collectors.toList;
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-@Service
 public class TaskFacade {
     private final TaskFactory taskFactory;
     private final TaskRepository taskRepository;

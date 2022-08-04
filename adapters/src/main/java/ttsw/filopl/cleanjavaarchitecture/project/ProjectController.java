@@ -7,6 +7,7 @@ import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ class ProjectController {
 
     @GetMapping
     List<ProjectDto> list() {
-        return projectQueryRepository.findBy();
+        return new ArrayList<>(projectQueryRepository.findBy(ProjectDto.class));
     }
 
     @GetMapping("/{id}")

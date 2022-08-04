@@ -6,6 +6,7 @@ import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskWithChangesQueryDto;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +26,12 @@ class TaskController {
 
     @GetMapping
     List<TaskDto> list() {
-        return taskQueryRepository.findAllBy();
+        return new ArrayList<>(taskQueryRepository.findBy(TaskDto.class));
     }
 
     @GetMapping(params = "changes")
     List<TaskWithChangesQueryDto> listWithChanges() {
-        return taskQueryRepository.findAllWithChangesBy();
+        return new ArrayList<>(taskQueryRepository.findBy(TaskWithChangesQueryDto.class));
     }
 
     @GetMapping("/{id}")
