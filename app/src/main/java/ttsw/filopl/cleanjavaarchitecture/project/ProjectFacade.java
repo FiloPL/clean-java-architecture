@@ -2,7 +2,7 @@ package ttsw.filopl.cleanjavaarchitecture.project;
 
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectStepDto;
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProject;
 import ttsw.filopl.cleanjavaarchitecture.task.TaskQueryRepository;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 import ttsw.filopl.cleanjavaarchitecture.task.TaskFacade;
@@ -35,7 +35,7 @@ public class ProjectFacade {
         this.taskQueryRepository = taskQueryRepository;
     }
 
-    ProjectDto save(ProjectDto dtoToSave) {
+    public ProjectDto save(ProjectDto dtoToSave) {
         var toSave = projectFactory.from(dtoToSave);
         if (toSave.getId() != 0) {
             return toDto(saveWithId(toSave));
@@ -95,7 +95,7 @@ public class ProjectFacade {
                             .withDeadline(projectDeadline.plusDays(step.getDaysToProjectDeadline()))
                             .build()
                     ).collect(toList());
-            return taskFacade.saveAll(tasks, new SimpleProjectQueryEntity(projectId, project.getName()));
+            return taskFacade.saveAll(tasks, new SimpleProject(projectId, project.getName()));
         }).orElseThrow(() -> new IllegalArgumentException("No project found with id: " + projectId));
     }
 

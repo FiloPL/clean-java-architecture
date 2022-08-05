@@ -1,38 +1,23 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProject;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * Created by T. Filo Zegarlicki on 28.07.2022
  **/
 
-@Entity
-@Table(name = "tasks")
 class Task {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
     private int id;
-    @NotNull
     private String description;
     private boolean done;
     private ZonedDateTime deadline;
     private int changesCount;
     private String additionalComment;
-    @ManyToOne
-    @JoinColumn(name = "source_id")
-    private SimpleProjectQueryEntity project;
+    private final SimpleProject project;
 
-//    @PersistenceConstructor
-    public Task() {
-    }
-
-    Task(final @NotNull String description, final ZonedDateTime deadline, final SimpleProjectQueryEntity project) {
+    Task(final String description, final ZonedDateTime deadline, final SimpleProject project) {
         this.description = description;
         this.deadline = deadline;
         this.project = project;
@@ -86,11 +71,7 @@ class Task {
         this.additionalComment = additionalComment;
     }
 
-    SimpleProjectQueryEntity getProject() {
+    SimpleProject getProject() {
         return project;
-    }
-
-    void setProject(SimpleProjectQueryEntity project) {
-        this.project = project;
     }
 }

@@ -1,6 +1,6 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProject;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 import java.util.Collection;
@@ -21,10 +21,9 @@ public class TaskFacade {
         this.taskRepository = taskRepository;
     }
 
-    public List<TaskDto> saveAll(Collection<TaskDto> tasks, SimpleProjectQueryEntity project) {
+    public List<TaskDto> saveAll(Collection<TaskDto> tasks, SimpleProject project) {
         return taskRepository.saveAll(
-                        tasks.stream()
-                                .map(dto -> taskFactory.from(dto, project))
+                        tasks.stream().map(dto -> taskFactory.from(dto, project))
                                 .collect(toList())
                 ).stream().map(this::toDto)
                 .collect(toList());

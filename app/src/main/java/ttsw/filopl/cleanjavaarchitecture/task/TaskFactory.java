@@ -1,6 +1,6 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectQueryEntity;
+import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProject;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 /**
@@ -8,7 +8,7 @@ import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
  **/
 
 class TaskFactory {
-    Task from(final TaskDto source, final SimpleProjectQueryEntity project) {
+    Task from(final TaskDto source, final SimpleProject project) {
         var result = new Task(source.getDescription(), source.getDeadline(), project);
         result.setId(source.getId());
         result.setAdditionalComment(source.getAdditionalComment());
