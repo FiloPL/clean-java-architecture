@@ -9,10 +9,14 @@ import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
 class TaskFactory {
     Task from(final TaskDto source, final SimpleProject project) {
-        var result = new Task(source.getDescription(), source.getDeadline(), project);
-        result.setId(source.getId());
-        result.setAdditionalComment(source.getAdditionalComment());
-        result.setDone(source.isDone());
-        return result;
+        return Task.restore(new TaskSnapshot(
+                source.getId(),
+                source.getDescription(),
+                source.isDone(),
+                source.getDeadline(),
+                0,
+                source.getAdditionalComment(),
+                project != null ? project.getSnapshot() : null
+        ));
     }
 }

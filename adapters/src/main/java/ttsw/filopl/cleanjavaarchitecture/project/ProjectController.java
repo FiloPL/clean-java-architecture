@@ -6,7 +6,6 @@ import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDeadlineDto;
 import ttsw.filopl.cleanjavaarchitecture.project.dto.ProjectDto;
 import ttsw.filopl.cleanjavaarchitecture.task.dto.TaskDto;
 
-import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +38,6 @@ class ProjectController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Project> update(@PathVariable int id, @RequestBody ProjectDto toUpdate) {
         if (id != toUpdate.getId()) {

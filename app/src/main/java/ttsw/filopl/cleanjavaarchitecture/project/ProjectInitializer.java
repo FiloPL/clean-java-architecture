@@ -1,5 +1,7 @@
 package ttsw.filopl.cleanjavaarchitecture.project;
 
+import java.util.Set;
+
 /**
  * Created by T. Filo Zegarlicki on 29.07.2022
  **/
@@ -15,12 +17,15 @@ class ProjectInitializer {
 
     void init() {
         if (projectQueryRepository.count() == 0) {
-            var project = new Project();
-            project.setName("Example project");
-            project.addStep(new ProjectStep("First", -3, project));
-            project.addStep(new ProjectStep("Second", -2, project));
-            project.addStep(new ProjectStep("Third", 0, project));
-            projectRepository.save(project);
+            projectRepository.save(Project.restore(new ProjectSnapshot(
+                    0,
+                    "ExampleProject",
+                    Set.of(
+                            new ProjectStepSnapshot(0, "First", -3),
+                            new ProjectStepSnapshot(0, "Second", -2),
+                            new ProjectStepSnapshot(0, "Third", 0)
+                    )
+            )));
         }
     }
 }
