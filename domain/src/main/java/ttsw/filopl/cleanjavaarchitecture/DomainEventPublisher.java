@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.task;
+package ttsw.filopl.cleanjavaarchitecture;
 
 /**
  * Created by T. Filo Zegarlicki on 11.08.2022

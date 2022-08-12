@@ -1,6 +1,8 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProject;
+import ttsw.filopl.cleanjavaarchitecture.task.vo.TaskCreator;
+import ttsw.filopl.cleanjavaarchitecture.task.vo.TaskEvent;
+import ttsw.filopl.cleanjavaarchitecture.task.vo.TaskSourceId;
 
 import java.time.ZonedDateTime;
 
@@ -17,7 +19,19 @@ class Task {
                 snapshot.getDeadline(),
                 snapshot.getChangesCount(),
                 snapshot.getAdditionalComment(),
-                snapshot.getProject() != null ? SimpleProject.restore(snapshot.getProject()) : null
+                snapshot.getSourceId()
+        );
+    }
+
+    static Task createFrom(final TaskCreator source) {
+        return new Task(
+                0,
+                source.getDescription(),
+                false,
+                source.getDeadline(),
+                0,
+                null,
+                source.getId()
         );
     }
 
@@ -27,7 +41,7 @@ class Task {
     private ZonedDateTime deadline;
     private int changesCount;
     private String additionalComment;
-    private final SimpleProject project;
+    private TaskSourceId sourceId;
 
     private Task(
             final int id,
@@ -36,7 +50,7 @@ class Task {
             final ZonedDateTime deadline,
             final int changesCount,
             final String additionalComment,
-            final SimpleProject project
+            final TaskSourceId sourceId
     ) {
         this.id = id;
         this.description = description;
@@ -44,7 +58,7 @@ class Task {
         this.deadline = deadline;
         this.changesCount = changesCount;
         this.additionalComment = additionalComment;
-        this.project = project;
+        this.sourceId = sourceId;
     }
 
     TaskSnapshot getSnapshot() {
@@ -55,19 +69,25 @@ class Task {
                 deadline,
                 changesCount,
                 additionalComment,
-                project != null ? project.getSnapshot() : null
+                sourceId
         );
     }
 
-    void toggle() {
+    TaskEvent toggle() {
         done = !done;
         ++changesCount;
+        return new TaskEvent(sourceId, done ? TaskEvent.State.DONE : TaskEvent.State.UNDONE, null);
     }
 
-    void updateInfo(String description, ZonedDateTime deadline, String additionalComment) {
+    TaskEvent updateInfo(String description, ZonedDateTime deadline, String additionalComment) {
         // rules, e.g. cannot be updated when done
         this.description = description;
         this.deadline = deadline;
         this.additionalComment = additionalComment;
+        return new TaskEvent(
+                sourceId,
+                TaskEvent.State.UPDATED,
+                new TaskEvent.Data(description, deadline, additionalComment)
+        );
     }
 }

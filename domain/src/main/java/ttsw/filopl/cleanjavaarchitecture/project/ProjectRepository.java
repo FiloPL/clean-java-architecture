@@ -11,5 +11,7 @@ interface ProjectRepository {
 
     Optional<Project> findById(Integer id);
 
+    Optional<Project> findByNestedStepId(Integer id);
+
     void delete(Project.Step entity);
 }

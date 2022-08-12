@@ -17,7 +17,9 @@ class ProjectFactory {
                         .map(stepDto -> new ProjectStepSnapshot(
                                         stepDto.getId(),
                                         stepDto.getDescription(),
-                                        stepDto.getDaysToProjectDeadline()
+                                        stepDto.getDaysToProjectDeadline(),
+                                        false,
+                                        false
                                 )
                         ).collect(Collectors.toSet())
         ));

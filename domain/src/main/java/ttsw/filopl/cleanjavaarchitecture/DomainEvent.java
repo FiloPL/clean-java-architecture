@@ -1,4 +1,4 @@
-package ttsw.filopl.cleanjavaarchitecture.task;
+package ttsw.filopl.cleanjavaarchitecture;
 
 import java.time.Instant;
 

@@ -1,6 +1,6 @@
 package ttsw.filopl.cleanjavaarchitecture.task;
 
-import ttsw.filopl.cleanjavaarchitecture.project.dto.SimpleProjectSnapshot;
+import ttsw.filopl.cleanjavaarchitecture.task.vo.TaskSourceId;
 
 import java.time.ZonedDateTime;
 
@@ -15,9 +15,9 @@ class TaskSnapshot {
     private ZonedDateTime deadline;
     private int changesCount;
     private String additionalComment;
-    private SimpleProjectSnapshot project;
+    private TaskSourceId sourceId;
 
-    public TaskSnapshot() {
+    protected TaskSnapshot() {
     }
 
     TaskSnapshot(
@@ -26,7 +26,7 @@ class TaskSnapshot {
             final ZonedDateTime deadline,
             final int changesCount,
             final String additionalComment,
-            final SimpleProjectSnapshot project
+            final TaskSourceId sourceId
     ) {
         this.id = id;
         this.description = description;
@@ -34,7 +34,7 @@ class TaskSnapshot {
         this.deadline = deadline;
         this.changesCount = changesCount;
         this.additionalComment = additionalComment;
-        this.project = project;
+        this.sourceId = sourceId;
     }
 
     int getId() {
@@ -61,7 +61,7 @@ class TaskSnapshot {
         return this.additionalComment;
     }
 
-    SimpleProjectSnapshot getProject() {
-        return this.project;
+    TaskSourceId getSourceId() {
+        return sourceId;
     }
 }
