@@ -12,16 +12,7 @@ import ttsw.filopl.cleanjavaarchitecture.task.TaskQueryRepository;
 @Configuration
 class ProjectConfiguration {
     @Bean
-    ProjectFacade projectFacade(
-            ProjectRepository projectRepository,
-            TaskFacade taskFacade,
-            TaskQueryRepository taskQueryRepository
-    ) {
-        return new ProjectFacade(
-                new ProjectFactory(),
-                projectRepository,
-                taskFacade,
-                taskQueryRepository
-        );
+    ProjectFacade projectFacade(final ProjectRepository projectRepository, final TaskFacade taskFacade) {
+        return new ProjectFacade(new ProjectFactory(), projectRepository, taskFacade);
     }
 }
